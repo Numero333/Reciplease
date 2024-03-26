@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct EdamamSearch: Decodable {
     let result: [Recipe]
@@ -28,4 +29,21 @@ struct RecipeDescription: Decodable {
     let yield: Int
     let ingredientLines: [String]
     let totalTime: Int?
+    
+    var durationFormatted: String {
+        return timeFormatter(for: totalTime)
+    }
+}
+
+
+extension RecipeDescription {
+    private func timeFormatter(for time: Int?) -> String {
+        if let time = time, time > 0 {
+            let hours = time / 60
+            let minutes = time % 60
+            return "\(hours):\(minutes)"
+        } else {
+            return "N/A"
+        }
+    }
 }
