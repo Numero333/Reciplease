@@ -7,29 +7,29 @@
 
 import UIKit
 
-class SearchListViewController: UIViewController {
+final class SearchListViewController: UIViewController {
     
     //MARK: - Property
-    #warning("Val")
-    var model = SearchRecipeModel()
+    var model: SearchListModel!
     @IBOutlet weak var recipeTableView: UITableView!
-        
+    
+    //MARK: - Initialization
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     //MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        tabBarController?.tabBar.isHidden = true
-        
-        model.loadData()
-        #warning("Val")
-        Thread.sleep(forTimeInterval: 1)
-        recipeTableView.reloadData()
-        
+        self.hidesBottomBarWhenPushed = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationVC = segue.destination as? SearchDetailViewController else { return }
-        destinationVC.model = self.model
+        if let selection = model.selectedRecipe {
+            destinationVC.model = SearchDetailModel(selectedRecipe: selection)
+        }
     }
     
     //MARK: - Private
@@ -43,14 +43,13 @@ class SearchListViewController: UIViewController {
 extension SearchListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Dans le model ?
-        model.selectedRecipe = model.recipes?.result[indexPath.row].recipe
-        
+        let selection = model.recipes?.results[indexPath.row].recipe
+        model.selectedRecipe = selection
         performSegue(withIdentifier: "recipeDetail", sender: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.recipes?.result.count ?? 0
+        return model.recipes?.results.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,47 +57,41 @@ extension SearchListViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         
-        // IMAGE -> tu l'a dupliqué fait mieux Berk!
-        if let urlString = model.recipes?.result[indexPath.row].recipe.image, let url = URL(string: urlString) {
+        if let recipe = model.recipes?.results[indexPath.row].recipe {
+            configureCell(with: recipe)
+        }
+        return cell
+        
+        func configureCell(with recipe: RecipeDescription) {
+            cell.title.text = recipe.label.description
+            cell.subTitle.text = recipe.ingredientLines.joined(separator: " ")
+            cell.backgroundImage.loadImage(for: recipe.image)
+            cell.likeLabel.text = recipe.yield.description
+            cell.durationLabel.text = recipe.durationFormatted
+        }
+    }
+}
+
+extension UIImageView {
+    func loadImage(for imageURL: String?) {
+        if let urlString = imageURL, let url = URL(string: urlString) {
             DispatchQueue.global(qos: .background).async {
                 if let data = try? Data(contentsOf: url) {
                     DispatchQueue.main.async {
-                        cell.backgroundImage.image = UIImage(data: data)
+                        self.image = UIImage(data: data)
                     }
                 } else {
                     // If loading image fail
                     DispatchQueue.main.async {
-                        cell.backgroundImage.image = UIImage(systemName: "fork.knife")
+                        self.image = UIImage(systemName: "fork.knife")
                     }
                 }
             }
         } else {
             // If the recipe does not have an image
             DispatchQueue.main.async {
-                cell.backgroundImage.image = UIImage(systemName: "fork.knife")
+                self.image = UIImage(systemName: "fork.knife")
             }
         }
-        
-        // TITLE
-        cell.title.text = model.recipes?.result[indexPath.row].recipe.label
-        // SUBTITLE
-        cell.subTitle.text = model.recipes?.result[indexPath.row].recipe.ingredientLines.joined(separator: ", ")
-        // LIKES
-        cell.likeLabel.text = model.recipes?.result[indexPath.row].recipe.yield.description
-        // DURATION
-        cell.durationLabel.text = timeFormatter(for: model.recipes?.result[indexPath.row].recipe.totalTime)
-        
-        return cell
     }
-    
-    private func timeFormatter(for time: Int?) -> String {
-        if let time = time, time > 0 {
-            let hours = time / 60
-            let minutes = time % 60
-            return "\(hours):\(minutes)"
-        } else {
-            return "N/A"
-        }
-    }
-    
 }

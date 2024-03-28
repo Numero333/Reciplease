@@ -7,33 +7,33 @@
 
 import UIKit
 
-class SearchDetailViewController: UIViewController {
+final class SearchDetailViewController: UIViewController {
     
     //MARK: - Property
-    var model = SearchRecipeModel()
+    var model: SearchDetailModel!
     @IBOutlet weak var ingredientTableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     
+    //MARK: - Initialization
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     //MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        tabBarController?.tabBar.isHidden = true
-        
-        likeLabel.text = model.selectedRecipe?.yield.description
-        durationLabel.text = model.selectedRecipe?.durationFormatted
-        imageView.load(imageURL: model.selectedRecipe?.image)
+        configureView()
         ingredientTableView.reloadData()
-        
+        self.hidesBottomBarWhenPushed = true
     }
     
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            guard let destinationVC = segue.destination as? WebViewController else { return }
-            destinationVC.model = self.model
-//            performSegue(withIdentifier: "recipeWebView", sender: nil)
-        }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destinationVC = segue.destination as? WebViewController else { return }
+        destinationVC.model = WebViewModel(url: model.selectedRecipe.url)
+    }
     
     //MARK: - Action
     @IBAction func addFavorite(_ sender: Any) {
@@ -46,38 +46,23 @@ class SearchDetailViewController: UIViewController {
         ingredientTableView.dataSource = self
     }
     
+    private func configureView() {
+        likeLabel.text = model.selectedRecipe.yield.description
+        durationLabel.text = model.selectedRecipe.durationFormatted
+        imageView.loadImage(for: model.selectedRecipe.image)
+    }
 }
 
 
 extension SearchDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let row = model.selectedRecipe?.ingredientLines.count else {
-            return 0
-        }
-        return row
+        let rows = model.selectedRecipe.ingredientLines.count
+        return rows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ingredientTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = model.selectedRecipe?.ingredientLines[indexPath.row].description
+        cell.textLabel?.text = model.selectedRecipe.ingredientLines[indexPath.row].description
         return cell
-    }
-}
-
-#warning("move it")
-extension UIImageView {
-    func load(imageURL: String?) {
-        guard let url = URL(string: imageURL ?? "") else {
-            return
-        }
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
-                }
-            }
-        }
     }
 }

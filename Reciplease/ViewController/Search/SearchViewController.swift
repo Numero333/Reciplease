@@ -7,32 +7,45 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController, SearchRecipeDelegate {
     
     //MARK: - Property
-    let model = SearchRecipeModel()
-    
+    private let model = SearchModel()
     @IBOutlet weak var ingredientTableView: UITableView!
     @IBOutlet weak var ingredientTextfield: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     //MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
+        model.delegate = self
         configureTableView()
-        tabBarController?.tabBar.isHidden = false
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
+        activityIndicator.isHidden = true
+        self.hidesBottomBarWhenPushed = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationVC = segue.destination as? SearchListViewController else { return }
-
-        destinationVC.model = self.model
+        
+        if let recipes = model.recipes {
+            destinationVC.model = SearchListModel(recipes: recipes)
+        }
+    }
+    
+    //MARK: - AppServiceDelegate
+    func didLoadData(result: Bool) {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "RecipeList", sender: nil)
+            self.toggleActivityIndicator()
+        }
     }
     
     //MARK: - Action
+    @IBAction func SearchButton(_ sender: Any) {
+        toggleActivityIndicator()
+        model.loadData()
+    }
+    
     @IBAction func addIngredientButton(_ sender: Any) {
         if let ingredient = ingredientTextfield.text, !ingredient.isEmpty {
             model.addIngredient(text: ingredient)
@@ -54,6 +67,13 @@ class SearchViewController: UIViewController {
     private func configureTableView() {
         ingredientTableView.dataSource = self
         ingredientTableView.delegate = self
+    }
+    
+    private func toggleActivityIndicator() {
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden ?  self.activityIndicator.startAnimating() :  self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden.toggle()
+        }
     }
 }
 
