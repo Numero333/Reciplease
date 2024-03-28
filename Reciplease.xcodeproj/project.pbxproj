@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7412DA0B2BB1E17800A78ED4 /* FavoriteRecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7412DA0A2BB1E17800A78ED4 /* FavoriteRecipeModel.swift */; };
+		743F73982BB5DC840016EEDD /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743F73972BB5DC840016EEDD /* CoreDataService.swift */; };
 		7479F6102BB4783700DC47E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74CA831F2BA8A548000B7139 /* Main.storyboard */; };
 		7486A4EE2BB311B200DC41BC /* FavoriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7486A4ED2BB311B200DC41BC /* FavoriteListViewController.swift */; };
 		748E01D42BB5C8150042FD8D /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E01D32BB5C8150042FD8D /* WebViewModel.swift */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		7412DA0A2BB1E17800A78ED4 /* FavoriteRecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipeModel.swift; sourceTree = "<group>"; };
+		743F73972BB5DC840016EEDD /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		7486A4ED2BB311B200DC41BC /* FavoriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewController.swift; sourceTree = "<group>"; };
 		748E01D32BB5C8150042FD8D /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		74AB90F62BB482FC005DD16E /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
@@ -114,6 +116,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		743F73962BB5DC4D0016EEDD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				743F73972BB5DC840016EEDD /* CoreDataService.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		7479F6082BB4701F00DC47E5 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +257,7 @@
 		74CA834A2BA8A5F5000B7139 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				743F73962BB5DC4D0016EEDD /* CoreData */,
 				748E01D02BB5C74D0042FD8D /* WebView */,
 				74B0C4E42BB09D6C00D926D7 /* Network */,
 				7479F6082BB4701F00DC47E5 /* Search */,
@@ -440,6 +451,7 @@
 				7486A4EE2BB311B200DC41BC /* FavoriteListViewController.swift in Sources */,
 				74B0C4D92BB08C9800D926D7 /* WebViewController.swift in Sources */,
 				74B0C4D52BB08B6500D926D7 /* SearchListViewController.swift in Sources */,
+				743F73982BB5DC840016EEDD /* CoreDataService.swift in Sources */,
 				74CA831C2BA8A548000B7139 /* SceneDelegate.swift in Sources */,
 				74B0C4E92BB09D6C00D926D7 /* RecipeQueryParameters.swift in Sources */,
 				74AB90F92BB48302005DD16E /* SearchListModel.swift in Sources */,
