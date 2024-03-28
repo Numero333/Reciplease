@@ -8,11 +8,13 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController {
+final class WebViewController: UIViewController {
     
+    //MARK: - Property
     var webView: WKWebView!
-    var model = SearchRecipeModel()
+    var model: WebViewModel!
     
+    //MARK: - Override
     override func loadView() {
         webView = WKWebView()
         view = webView
@@ -20,7 +22,7 @@ class WebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let url = URL(string: model.selectedRecipe?.url ?? "") {
+        if let url = URL(string: model.url) {
             let request = URLRequest(url: url)
             webView.load(request)
         }

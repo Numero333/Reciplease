@@ -139,6 +139,9 @@
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.21568629149999999" green="0.20000001789999999" blue="0.19607841970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <segue destination="x49-7v-ucE" kind="show" identifier="RecipeList" id="bJZ-KO-yl8"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
@@ -153,9 +156,14 @@
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="x49-7v-ucE" kind="show" id="mkG-vV-r3M"/>
+                                            <action selector="SearchButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Bpq-LR-NpI"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="MbD-fx-0lE">
+                                        <rect key="frame" x="205" y="292.33333333333326" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21568629149999999" green="0.20000001789999999" blue="0.19607841970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
@@ -201,6 +209,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="MbD-fx-0lE" id="ad6-su-kMS"/>
                         <outlet property="ingredientTableView" destination="yE2-Xh-k10" id="q7X-BQ-KqL"/>
                         <outlet property="ingredientTextfield" destination="Qw9-1d-kIO" id="dqF-VV-joH"/>
                     </connections>
@@ -212,7 +221,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-523" y="-115"/>
+            <point key="canvasLocation" x="-523.25581395348831" y="-115.23605150214593"/>
         </scene>
         <!--Reciplease-->
         <scene sceneID="gfp-Mt-0fL">
@@ -346,8 +355,8 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kqe-Ua-W3B">
-                                <rect key="frame" x="0.0" y="522.33333333333337" width="430" height="128"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kqe-Ua-W3B">
+                                <rect key="frame" x="0.0" y="522.33333333333337" width="430" height="246"/>
                                 <color key="backgroundColor" red="0.21568629149999999" green="0.20000001789999999" blue="0.19607841970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="separatorColor" red="0.21568629149999999" green="0.20000001789999999" blue="0.19607841970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
@@ -403,7 +412,7 @@
                             <constraint firstItem="aDb-zR-dxd" firstAttribute="centerX" secondItem="zfF-wH-EdA" secondAttribute="centerX" id="QQr-GG-g3Y"/>
                             <constraint firstItem="63H-4i-C0J" firstAttribute="trailing" secondItem="fC5-gT-xLe" secondAttribute="trailing" id="T1j-hL-Jgw"/>
                             <constraint firstItem="75u-CQ-O6O" firstAttribute="height" secondItem="zfF-wH-EdA" secondAttribute="height" multiplier="0.05" id="WZI-yg-1BW"/>
-                            <constraint firstItem="kqe-Ua-W3B" firstAttribute="height" secondItem="fC5-gT-xLe" secondAttribute="height" multiplier="0.34347" id="XyX-Kb-Iwd"/>
+                            <constraint firstItem="aDb-zR-dxd" firstAttribute="top" secondItem="kqe-Ua-W3B" secondAttribute="bottom" id="bMD-pe-dKU"/>
                             <constraint firstItem="kqe-Ua-W3B" firstAttribute="top" secondItem="oM4-I3-VpN" secondAttribute="bottom" id="dO8-8f-JKb"/>
                             <constraint firstItem="aDb-zR-dxd" firstAttribute="height" secondItem="fC5-gT-xLe" secondAttribute="height" multiplier="0.162791" id="k0g-y3-9XJ"/>
                             <constraint firstItem="oM4-I3-VpN" firstAttribute="top" secondItem="fC5-gT-xLe" secondAttribute="bottom" id="mpX-Ha-nSF"/>
@@ -431,8 +440,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="clock" catalog="system" width="128" height="123"/>
-        <image name="hand.thumbsup.fill" catalog="system" width="128" height="121"/>
+        <image name="clock" catalog="system" width="32" height="32"/>
+        <image name="hand.thumbsup.fill" catalog="system" width="32" height="32"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

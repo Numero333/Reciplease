@@ -1,5 +1,5 @@
 //
-//  RecipeModel.swift
+//  EdamamSearch.swift
 //  Reciplease
 //
 //  Created by François-Xavier on 13/03/2024.
