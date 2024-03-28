@@ -20,7 +20,7 @@ final class SearchModel {
     var recipes: EdamamSearch?
     weak var delegate: SearchRecipeDelegate?
     
-    //MARK: - Accesible
+    //MARK: - Accessible
     func addIngredient(text: String) {
         let textLowercased = text.lowercased()
         if !inputListIngredient.contains(textLowercased){
