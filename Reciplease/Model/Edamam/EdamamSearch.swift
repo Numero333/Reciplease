@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 struct EdamamSearch: Decodable {
-    let result: [Recipe]
+    let results: [Recipe]
     
     enum CodingKeys: String, CodingKey {
-        case result = "hits"
+        case results = "hits"
     }
 }
 
