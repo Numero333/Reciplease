@@ -22,10 +22,9 @@ final class CoreDataService: CoreDataServiceInterface {
     static let shared: CoreDataServiceInterface = CoreDataService()
     
     // MARK: - Property
-    
     private let recipeModel: NSManagedObjectModel
     private lazy var container: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "recipe", managedObjectModel: self.recipeModel)
+        let container = NSPersistentContainer(name: "RecipeCoreDataModel", managedObjectModel: self.recipeModel)
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error {
                 fatalError("Something went wrong \(error)")
@@ -36,9 +35,8 @@ final class CoreDataService: CoreDataServiceInterface {
     }()
     
     // MARK: - Initialization
-
     init() {
-        guard let url = Bundle.main.url(forResource: "recipe", withExtension: "momd") else {
+        guard let url = Bundle.main.url(forResource: "RecipeCoreDataModel", withExtension: "momd") else {
             fatalError("Something went wrong")
         }
         guard let model = NSManagedObjectModel(contentsOf: url) else {
@@ -48,7 +46,6 @@ final class CoreDataService: CoreDataServiceInterface {
     }
 
     // MARK: - Accessible
-    
     var mainContext: NSManagedObjectContext {
         return self.container.viewContext
     }
@@ -64,15 +61,12 @@ final class CoreDataService: CoreDataServiceInterface {
     }
 
     func read<T: NSManagedObject>(entityType: T.Type, context: NSManagedObjectContext, predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor]?) async -> [T] {
-//        var objects: [T] = []
         return await context.perform {
             let request: NSFetchRequest<T> = NSFetchRequest(entityName: String(describing: entityType))
             request.predicate = predicate
             request.sortDescriptors = sortDescriptors
-            
             return (try? context.fetch(request)) ?? []
         }
-//        return objects
     }
 
     func delete(objects: [NSManagedObject], context: NSManagedObjectContext) async {
