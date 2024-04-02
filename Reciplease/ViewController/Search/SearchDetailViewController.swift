@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SearchDetailViewController: UIViewController {
+final class SearchDetailViewController: UIViewController, SearchDetailDelegate {
     
     //MARK: - Property
     var model: SearchDetailModel!
@@ -15,6 +15,7 @@ final class SearchDetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
     
     //MARK: - Initialization
     required init?(coder aDecoder: NSCoder) {
@@ -28,6 +29,12 @@ final class SearchDetailViewController: UIViewController {
         configureView()
         ingredientTableView.reloadData()
         self.hidesBottomBarWhenPushed = true
+        model.delegate = self
+        model.loadData()
+        
+        likeLabel.accessibilityValue = "likes"
+        durationLabel.accessibilityValue = "preparation time"
+        favoriteButton.accessibilityLabel = "add to favorite button"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -35,9 +42,17 @@ final class SearchDetailViewController: UIViewController {
         destinationVC.model = WebViewModel(url: model.selectedRecipe.url)
     }
     
+    //MARK: - AppServiceDelegate
+    func didUpdate(liked: Bool) {
+        let imageSystem = liked ? "star.fill" : "star"
+        DispatchQueue.main.async {
+            self.favoriteButton.image = UIImage(systemName: imageSystem)
+        }
+    }
+    
     //MARK: - Action
-    @IBAction func addFavorite(_ sender: Any) {
-        // CoreData Integration
+    @IBAction func toggleFavoriteButton(_ sender: Any) {
+        model.handleFavoriteButton()
     }
     
     //MARK: - Private
