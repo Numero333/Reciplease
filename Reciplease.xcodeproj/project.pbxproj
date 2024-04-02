@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7412DA0B2BB1E17800A78ED4 /* FavoriteRecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7412DA0A2BB1E17800A78ED4 /* FavoriteRecipeModel.swift */; };
+		743E8BC92BB9C02B00B51505 /* FavoriteListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743E8BC82BB9C02B00B51505 /* FavoriteListModel.swift */; };
 		743F73982BB5DC840016EEDD /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743F73972BB5DC840016EEDD /* CoreDataService.swift */; };
+		74746ED62BBAD3DF0088F93E /* FavoriteDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74746ED52BBAD3DF0088F93E /* FavoriteDetailModel.swift */; };
 		7479F6102BB4783700DC47E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74CA831F2BA8A548000B7139 /* Main.storyboard */; };
 		7486A4EE2BB311B200DC41BC /* FavoriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7486A4ED2BB311B200DC41BC /* FavoriteListViewController.swift */; };
 		748E01D42BB5C8150042FD8D /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E01D32BB5C8150042FD8D /* WebViewModel.swift */; };
@@ -36,6 +37,8 @@
 		74CA833D2BA8A54A000B7139 /* RecipleaseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CA833C2BA8A54A000B7139 /* RecipleaseUITestsLaunchTests.swift */; };
 		74CA834F2BA8A886000B7139 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74CA834E2BA8A886000B7139 /* Search.storyboard */; };
 		74CA83512BA8A894000B7139 /* Favorite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74CA83502BA8A894000B7139 /* Favorite.storyboard */; };
+		74FB1C242BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 74FB1C222BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodeld */; };
+		74FB8D022BB9ECB5005FCAD2 /* FavoriteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB8D012BB9ECB5005FCAD2 /* FavoriteDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,8 +59,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7412DA0A2BB1E17800A78ED4 /* FavoriteRecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipeModel.swift; sourceTree = "<group>"; };
+		743E8BC82BB9C02B00B51505 /* FavoriteListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListModel.swift; sourceTree = "<group>"; };
 		743F73972BB5DC840016EEDD /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		74746ED52BBAD3DF0088F93E /* FavoriteDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailModel.swift; sourceTree = "<group>"; };
 		7486A4ED2BB311B200DC41BC /* FavoriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewController.swift; sourceTree = "<group>"; };
 		748E01D32BB5C8150042FD8D /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		74AB90F62BB482FC005DD16E /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
@@ -88,6 +92,8 @@
 		74CA833C2BA8A54A000B7139 /* RecipleaseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipleaseUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		74CA834E2BA8A886000B7139 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Search.storyboard; path = Reciplease/View/Search.storyboard; sourceTree = SOURCE_ROOT; };
 		74CA83502BA8A894000B7139 /* Favorite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Favorite.storyboard; path = Reciplease/View/Favorite.storyboard; sourceTree = SOURCE_ROOT; };
+		74FB1C232BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RecipeCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		74FB8D012BB9ECB5005FCAD2 /* FavoriteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				743F73972BB5DC840016EEDD /* CoreDataService.swift */,
+				74FB1C222BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -145,7 +152,8 @@
 		7479F60A2BB4704A00DC47E5 /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
-				7412DA0A2BB1E17800A78ED4 /* FavoriteRecipeModel.swift */,
+				743E8BC82BB9C02B00B51505 /* FavoriteListModel.swift */,
+				74746ED52BBAD3DF0088F93E /* FavoriteDetailModel.swift */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -172,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				7486A4ED2BB311B200DC41BC /* FavoriteListViewController.swift */,
+				74FB8D012BB9ECB5005FCAD2 /* FavoriteDetailViewController.swift */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -441,20 +450,23 @@
 				74B0C4D32BB08B4800D926D7 /* SearchViewController.swift in Sources */,
 				74B0C4EA2BB09D6C00D926D7 /* EdamamSearch.swift in Sources */,
 				74B0C4E62BB09D6C00D926D7 /* APIKey.swift in Sources */,
+				743E8BC92BB9C02B00B51505 /* FavoriteListModel.swift in Sources */,
 				74AB90F72BB482FC005DD16E /* SearchModel.swift in Sources */,
 				74BAB7B32BA9A2E7009144BE /* RecipeTableViewCell.swift in Sources */,
 				74CA831A2BA8A548000B7139 /* AppDelegate.swift in Sources */,
 				74B0C4E82BB09D6C00D926D7 /* NetworkService.swift in Sources */,
+				74746ED62BBAD3DF0088F93E /* FavoriteDetailModel.swift in Sources */,
 				748E01D42BB5C8150042FD8D /* WebViewModel.swift in Sources */,
 				74AB90FB2BB4830C005DD16E /* SearchDetailModel.swift in Sources */,
-				7412DA0B2BB1E17800A78ED4 /* FavoriteRecipeModel.swift in Sources */,
 				7486A4EE2BB311B200DC41BC /* FavoriteListViewController.swift in Sources */,
 				74B0C4D92BB08C9800D926D7 /* WebViewController.swift in Sources */,
 				74B0C4D52BB08B6500D926D7 /* SearchListViewController.swift in Sources */,
 				743F73982BB5DC840016EEDD /* CoreDataService.swift in Sources */,
 				74CA831C2BA8A548000B7139 /* SceneDelegate.swift in Sources */,
 				74B0C4E92BB09D6C00D926D7 /* RecipeQueryParameters.swift in Sources */,
+				74FB1C242BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodeld in Sources */,
 				74AB90F92BB48302005DD16E /* SearchListModel.swift in Sources */,
+				74FB8D022BB9ECB5005FCAD2 /* FavoriteDetailViewController.swift in Sources */,
 				74B0C4EF2BB1A98800D926D7 /* SearchDetailViewController.swift in Sources */,
 				74B0C4E72BB09D6C00D926D7 /* NetworkConfiguration.swift in Sources */,
 			);
@@ -834,6 +846,20 @@
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		74FB1C222BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				74FB1C232BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodel */,
+			);
+			currentVersion = 74FB1C232BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodel */;
+			name = RecipeCoreDataModel.xcdatamodeld;
+			path = "/Users/babydev/Documents/OpenClassRooms/Projet 10/Reciplease/Reciplease/Reciplease/Model/CoreData/RecipeCoreDataModel.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 74CA830E2BA8A548000B7139 /* Project object */;
 }
