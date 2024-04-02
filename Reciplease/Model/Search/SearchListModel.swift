@@ -17,6 +17,5 @@ final class SearchListModel {
     //MARK: - Initialization
     init(recipes: EdamamSearch) {
         self.recipes = recipes
-
     }
 }
