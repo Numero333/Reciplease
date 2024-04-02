@@ -210,6 +210,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityIndicator" destination="MbD-fx-0lE" id="ad6-su-kMS"/>
+                        <outlet property="addIngredientButton" destination="c4j-Vu-BvY" id="m9F-OB-CAW"/>
                         <outlet property="ingredientTableView" destination="yE2-Xh-k10" id="q7X-BQ-KqL"/>
                         <outlet property="ingredientTextfield" destination="Qw9-1d-kIO" id="dqF-VV-joH"/>
                     </connections>
@@ -259,7 +260,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="search" id="LRu-iA-sRA"/>
-                    <navigationItem key="navigationItem" title="Reciplease" id="yf2-xj-rCD"/>
+                    <navigationItem key="navigationItem" title="Reciplease" id="yf2-xj-rCD">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="LTQ-Mu-l0f"/>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -280,7 +283,9 @@
                         <viewLayoutGuide key="safeArea" id="6eh-YV-xAD"/>
                         <color key="backgroundColor" red="0.21568629149999999" green="0.20000001789999999" blue="0.19607841970000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ubF-8Y-qP1"/>
+                    <navigationItem key="navigationItem" id="ubF-8Y-qP1">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="M17-sv-M1Q"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IGz-WG-o4K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -306,7 +311,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qJn-qq-ajw">
                                                 <rect key="frame" x="0.0" y="0.0" width="64.333333333333329" height="23.333333333333332"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.5k" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwK-vq-C6B">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.5k" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwK-vq-C6B" userLabel="like k">
                                                         <rect key="frame" x="0.0" y="0.0" width="32" height="23.333333333333332"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -421,14 +426,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Reciplease" id="gsu-eh-1Wh">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="DgR-Am-idY"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="star" catalog="system" id="rlW-BU-F6p">
                             <connections>
-                                <action selector="addFavorite:" destination="vgF-et-XhM" id="Pea-BV-GvH"/>
+                                <action selector="toggleFavoriteButton:" destination="vgF-et-XhM" id="Pea-BV-GvH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="durationLabel" destination="4Y3-4N-6KE" id="18j-yr-0xl"/>
+                        <outlet property="favoriteButton" destination="rlW-BU-F6p" id="wjk-Ef-Slz"/>
                         <outlet property="imageView" destination="fC5-gT-xLe" id="Gqu-x9-V7L"/>
                         <outlet property="ingredientTableView" destination="kqe-Ua-W3B" id="ZSc-J0-B6l"/>
                         <outlet property="likeLabel" destination="dwK-vq-C6B" id="c8g-NC-gKh"/>
@@ -440,8 +447,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="clock" catalog="system" width="32" height="32"/>
-        <image name="hand.thumbsup.fill" catalog="system" width="32" height="32"/>
+        <image name="clock" catalog="system" width="128" height="123"/>
+        <image name="hand.thumbsup.fill" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
