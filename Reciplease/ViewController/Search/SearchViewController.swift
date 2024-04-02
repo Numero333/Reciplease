@@ -14,6 +14,7 @@ final class SearchViewController: UIViewController, SearchRecipeDelegate {
     @IBOutlet weak var ingredientTableView: UITableView!
     @IBOutlet weak var ingredientTextfield: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var addIngredientButton: UIButton!
     
     //MARK: - Override
     override func viewDidLoad() {
@@ -21,7 +22,11 @@ final class SearchViewController: UIViewController, SearchRecipeDelegate {
         model.delegate = self
         configureTableView()
         activityIndicator.isHidden = true
-        self.hidesBottomBarWhenPushed = true
+        ingredientTextfield.accessibilityLabel = "search for ingredients example"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
