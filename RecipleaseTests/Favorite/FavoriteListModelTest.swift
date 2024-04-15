@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import Reciplease
 
 final class FavoriteListModelTest: XCTestCase {
 

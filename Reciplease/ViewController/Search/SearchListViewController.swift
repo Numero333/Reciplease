@@ -22,7 +22,6 @@ final class SearchListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        self.hidesBottomBarWhenPushed = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -58,17 +57,9 @@ extension SearchListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if let recipe = model.recipes?.results[indexPath.row].recipe {
-            configureCell(with: recipe)
+            cell.configureCell(with: recipe)
         }
         return cell
-        
-        func configureCell(with recipe: RecipeDescription) {
-            cell.title.text = recipe.label.description
-            cell.subTitle.text = recipe.ingredientLines.joined(separator: " ")
-            cell.backgroundImage.loadImage(for: recipe.image)
-            cell.likeLabel.text = recipe.yield.description
-            cell.durationLabel.text = recipe.durationFormatted
-        }
     }
 }
 

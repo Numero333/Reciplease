@@ -14,10 +14,17 @@ final class FavoriteListViewController: UIViewController, FavoriteListDelegate {
     @IBOutlet weak var recipeTableView: UITableView!
     private let coreDataService = CoreDataService.shared
     
+    @IBOutlet weak var messageEmptyRecipe: UILabel!
     override func viewDidLoad() {
+        model.delegate = self
         recipeTableView.delegate = self
         recipeTableView.dataSource = self
         recipeTableView.register(RecipeTableViewCell.nib(), forCellReuseIdentifier: RecipeTableViewCell.identifier)
+        configureView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        model.loadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -30,7 +37,20 @@ final class FavoriteListViewController: UIViewController, FavoriteListDelegate {
     //MARK: - AppServiceDelegate
     func didLoadData(result: Bool) {
         DispatchQueue.main.async {
+            self.configureView()
             self.recipeTableView.reloadData()
+        }
+    }
+    
+    private func configureView() {
+        DispatchQueue.main.async {
+            if let recipes = self.model.recipes, !recipes.isEmpty {
+                self.messageEmptyRecipe.isHidden = true
+                self.recipeTableView.isHidden = false
+            } else {
+                self.recipeTableView.isHidden = true
+                self.messageEmptyRecipe.isHidden = false
+            }
         }
     }
 }

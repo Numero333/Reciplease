@@ -16,7 +16,7 @@ final class SearchDetailViewController: UIViewController, SearchDetailDelegate {
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
-    
+    @IBOutlet weak var informationBlock: UIView!
     //MARK: - Initialization
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -28,13 +28,13 @@ final class SearchDetailViewController: UIViewController, SearchDetailDelegate {
         configureTableView()
         configureView()
         ingredientTableView.reloadData()
-        self.hidesBottomBarWhenPushed = true
         model.delegate = self
         model.loadData()
         
         likeLabel.accessibilityValue = "likes"
         durationLabel.accessibilityValue = "preparation time"
         favoriteButton.accessibilityLabel = "add to favorite button"
+        informationBlock.customBorder()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

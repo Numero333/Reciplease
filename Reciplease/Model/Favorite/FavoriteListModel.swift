@@ -19,17 +19,15 @@ final class FavoriteListModel {
     var selectedRecipe: RecipeEntity?
     weak var delegate: FavoriteListDelegate?
     
-    //MARK: - Initialization
-    init() {
-        loadData()
-    }
-    
     //MARK: - Accesible
     func loadData() {
         Task {
             recipes = await fetchDatabase()
             delegate?.didLoadData(result: true)
+            print("called delegate")
+            print(recipes?.first?.label ?? "nothing")
         }
+        print("called")
     }
     
     //MARK: - Private

@@ -25,10 +25,6 @@ final class SearchViewController: UIViewController, SearchRecipeDelegate {
         ingredientTextfield.accessibilityLabel = "search for ingredients example"
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationVC = segue.destination as? SearchListViewController else { return }
         

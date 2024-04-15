@@ -7,6 +7,7 @@
 
 import XCTest
 
+
 final class FavoriteDetailModelTest: XCTestCase {
 
     override func setUpWithError() throws {
