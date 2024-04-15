@@ -1,14 +1,13 @@
 //
-//  RecipleaseTests.swift
+//  SearchModelTest.swift
 //  RecipleaseTests
 //
-//  Created by François-Xavier on 18/03/2024.
+//  Created by François-Xavier on 02/04/2024.
 //
 
 import XCTest
-@testable import Reciplease
 
-final class RecipleaseTests: XCTestCase {
+final class SearchModelTest: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
