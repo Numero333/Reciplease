@@ -33,7 +33,6 @@
 		74B0C4E82BB09D6C00D926D7 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B0C4E22BB09D6C00D926D7 /* NetworkService.swift */; };
 		74B0C4E92BB09D6C00D926D7 /* RecipeQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B0C4E32BB09D6C00D926D7 /* RecipeQueryParameters.swift */; };
 		74B0C4EA2BB09D6C00D926D7 /* EdamamSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B0C4E52BB09D6C00D926D7 /* EdamamSearch.swift */; };
-		74B0C4ED2BB09EC200D926D7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 74B0C4EC2BB09EC200D926D7 /* Alamofire */; };
 		74B0C4EF2BB1A98800D926D7 /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B0C4EE2BB1A98800D926D7 /* SearchDetailViewController.swift */; };
 		74BAB7B22BA9A2E7009144BE /* RecipeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 74BAB7B12BA9A2E7009144BE /* RecipeTableViewCell.xib */; };
 		74BAB7B32BA9A2E7009144BE /* RecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BAB7B02BA9A2E7009144BE /* RecipeTableViewCell.swift */; };
@@ -45,6 +44,7 @@
 		74CA833D2BA8A54A000B7139 /* RecipleaseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CA833C2BA8A54A000B7139 /* RecipleaseUITestsLaunchTests.swift */; };
 		74CA834F2BA8A886000B7139 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74CA834E2BA8A886000B7139 /* Search.storyboard */; };
 		74CA83512BA8A894000B7139 /* Favorite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74CA83502BA8A894000B7139 /* Favorite.storyboard */; };
+		74ECAD212BCD660B00EB393D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECAD202BCD660B00EB393D /* Alamofire */; };
 		74FB1C242BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 74FB1C222BB5EB730014BD18 /* RecipeCoreDataModel.xcdatamodeld */; };
 		74FB8D022BB9ECB5005FCAD2 /* FavoriteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB8D012BB9ECB5005FCAD2 /* FavoriteDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -117,7 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74B0C4ED2BB09EC200D926D7 /* Alamofire in Frameworks */,
+				74ECAD212BCD660B00EB393D /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +372,7 @@
 			);
 			name = Reciplease;
 			packageProductDependencies = (
-				74B0C4EC2BB09EC200D926D7 /* Alamofire */,
+				74ECAD202BCD660B00EB393D /* Alamofire */,
 			);
 			productName = Reciplease;
 			productReference = 74CA83162BA8A548000B7139 /* Reciplease.app */;
@@ -896,7 +896,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		74B0C4EC2BB09EC200D926D7 /* Alamofire */ = {
+		74ECAD202BCD660B00EB393D /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 74B0C4EB2BB09EC200D926D7 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
