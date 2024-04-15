@@ -69,18 +69,8 @@ final class SearchDetailModel {
         newRecipe.label = recipe.label
         newRecipe.ingredients = recipe.ingredientLines.joined(separator: " ")
         newRecipe.duration = recipe.durationFormatted
-        newRecipe.image = encodeImageToData(imageURL: recipe.image)
+        newRecipe.image = recipe.image
         newRecipe.url = recipe.url
         newRecipe.yield = Int16(recipe.yield)
-    }
-    
-    
-    private func encodeImageToData(imageURL: String?) -> Data? {
-        guard let urlString = imageURL, let url = URL(string: urlString) else { return nil }
-        var data: Data?
-        DispatchQueue.global(qos: .background).async {
-             data = try? Data(contentsOf: url)
-        }
-        return data
     }
 }

@@ -56,26 +56,8 @@ extension FavoriteListViewController: UITableViewDelegate, UITableViewDataSource
             cell.subTitle.text = recipe[indexPath.row].ingredients
             cell.likeLabel.text = recipe[indexPath.row].yield.description
             cell.durationLabel.text = recipe[indexPath.row].duration
-            cell.backgroundImage.loadImageFromData(for: recipe[indexPath.row].image)
+            cell.backgroundImage.loadImage(for: recipe[indexPath.row].image)
         }
         return cell
-    }
-}
-
-extension UIImageView {
-    func loadImageFromData(for data: Data?) {
-        if let data = data {
-            DispatchQueue.global(qos: .background).async {
-                DispatchQueue.main.async {
-                    self.image = UIImage(data: data)
-                }
-                
-            }
-        } else {
-            // If the recipe does not have an image
-            DispatchQueue.main.async {
-                self.image = UIImage(systemName: "fork.knife")
-            }
-        }
     }
 }

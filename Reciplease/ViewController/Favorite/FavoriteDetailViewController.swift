@@ -49,7 +49,7 @@ final class FavoriteDetailViewController: UIViewController {
     private func configureView() {
         likeLabel.text = model.recipe.yield.description
         durationLabel.text = model.recipe.duration?.description
-        imageView.loadImageFromData(for: model.recipe.image)
+        imageView.loadImage(for: model.recipe.image)
     }
     
 }
