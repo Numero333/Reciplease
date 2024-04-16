@@ -14,7 +14,7 @@ protocol FavoriteListDelegate: AnyObject {
 final class FavoriteListModel {
     
     //MARK: - Property
-    private let coreDataService = CoreDataService.shared
+    let recipeDataStore = RecipeDataStore()
     var recipes: [RecipeEntity]?
     var selectedRecipe: RecipeEntity?
     weak var delegate: FavoriteListDelegate?
@@ -24,15 +24,15 @@ final class FavoriteListModel {
         Task {
             recipes = await fetchDatabase()
             delegate?.didLoadData(result: true)
-            print("called delegate")
-            print(recipes?.first?.label ?? "nothing")
         }
-        print("called")
     }
     
     //MARK: - Private
     private func fetchDatabase() async -> [RecipeEntity] {
-        let data = await self.coreDataService.read(entityType: RecipeEntity.self, context: self.coreDataService.mainContext, predicate: nil, sortDescriptors: nil)
+        let data = await recipeDataStore.fetchRecipe(
+            selection: nil,
+            sortDescription: nil
+        )
         return data
     }
 }
