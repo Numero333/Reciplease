@@ -17,7 +17,7 @@ final class FavoriteDetailModel {
     let recipe: RecipeEntity
     let recipeDataStore = RecipeDataStore()
     var ingredients: [String] {
-        recipe.ingredients?.components(separatedBy: "newLine").filter { !$0.isEmpty } ?? []
+        recipe.ingredients?.components(separatedBy: "\n").filter { !$0.isEmpty } ?? []
     }
     weak var delegate: FavoriteDetailDelegate?
     

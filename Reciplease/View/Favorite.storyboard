@@ -241,7 +241,7 @@ Your future self will thank you when it's time to cook something yummy! 😋👩
                         <barButtonItem key="backBarButtonItem" title="Back" id="tY6-3m-BCi"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="star.fill" catalog="system" id="xCS-uj-hHN">
                             <connections>
-                                <action selector="toggleFavoriteButton:" destination="are-xG-k1y" id="MPe-ww-f5p"/>
+                                <action selector="favoriteButtonTapped:" destination="are-xG-k1y" id="MPe-ww-f5p"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

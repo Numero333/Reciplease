@@ -33,21 +33,21 @@ final class SearchViewController: UIViewController, SearchRecipeDelegate {
         }
     }
     
-    //MARK: - AppServiceDelegate
+    //MARK: - SearchRecipeDelegate
     func didLoadData(result: Bool) {
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "RecipeList", sender: nil)
-            self.toggleActivityIndicator()
+            self.toggleActivityIndicatorVisibility()
         }
     }
     
     //MARK: - Action
-    @IBAction func SearchButton(_ sender: Any) {
-        toggleActivityIndicator()
+    @IBAction func searchButtonTapped(_ sender: Any) {
+        toggleActivityIndicatorVisibility()
         model.loadData()
     }
     
-    @IBAction func addIngredientButton(_ sender: Any) {
+    @IBAction func addIngredientButtonTapped(_ sender: Any) {
         if let ingredient = ingredientTextfield.text, !ingredient.isEmpty {
             model.addIngredient(text: ingredient)
             ingredientTableView.reloadData()
@@ -70,7 +70,7 @@ final class SearchViewController: UIViewController, SearchRecipeDelegate {
         ingredientTableView.delegate = self
     }
     
-    private func toggleActivityIndicator() {
+    private func toggleActivityIndicatorVisibility() {
         DispatchQueue.main.async {
             self.activityIndicator.isHidden ?  self.activityIndicator.startAnimating() :  self.activityIndicator.stopAnimating()
             self.activityIndicator.isHidden.toggle()

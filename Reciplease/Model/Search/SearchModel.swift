@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - Protocol
 protocol SearchRecipeDelegate: AnyObject {
     func didLoadData(result: Bool)
 }
@@ -14,7 +15,7 @@ protocol SearchRecipeDelegate: AnyObject {
 final class SearchModel {
     
     //MARK: - Property
-    private let network = NetworkService()
+    var network = NetworkService()
     var inputListIngredient = [String]()
     var listIngredientFormatted: String { return inputListIngredient.joined(separator: " ") }
     var recipes: EdamamSearch?
@@ -34,8 +35,18 @@ final class SearchModel {
     
     func loadData() {
         Task {
-            recipes = try await network.performRequest(apiRequest: APIConfiguration(url: .edamamRecipe, parameters: RecipeQueryParameters(query: listIngredientFormatted), method: .get))
-            delegate?.didLoadData(result: true)
+            recipes = try await network.performRequest(
+                apiRequest: APIConfiguration(
+                    url: .edamamRecipe,
+                    parameters: RecipeQueryParameters(
+                        query: listIngredientFormatted
+                    ),
+                    method: .get
+                )
+            )
+            delegate?.didLoadData(
+                result: true
+            )
         }
     }
 }

@@ -34,7 +34,7 @@ final class FavoriteListViewController: UIViewController, FavoriteListDelegate {
         }
     }
     
-    //MARK: - AppServiceDelegate
+    //MARK: - FavoriteListDelegate
     func didLoadData(result: Bool) {
         DispatchQueue.main.async {
             self.configureView()

@@ -6,15 +6,20 @@
 //
 
 import Foundation
+import CoreData
 
-class RecipeDataStore {
+final class RecipeDataStore {
     
     //MARK: - Properties
     private let coreDataService = CoreDataService.shared
     
-    //MARK: - Accessible
+    let mainContext: NSManagedObjectContext
     
-    // CREATE
+    init(mainContext: NSManagedObjectContext = CoreDataService.shared.mainContext) {
+        self.mainContext = mainContext
+    }
+    
+    //MARK: - Accessible
     func save(selection: RecipeDescription) {
         let newRecipe = RecipeEntity(context: self.coreDataService.mainContext)
         configureRecipeEntity(for: newRecipe, recipe: selection)
@@ -23,14 +28,20 @@ class RecipeDataStore {
         }
     }
     
-    // READ
-    func fetchRecipe(selection: String) async throws -> [RecipeEntity] {
+    func fetchRecipe(selection: String?, sortDescription: [NSSortDescriptor]?) async -> [RecipeEntity] {
+        guard let selection = selection else { return [] }
+        let sortDescriptor = NSSortDescriptor(key: "label", ascending: true)
         let predicate = NSPredicate(format: "label == %@", selection)
-        let response = await self.coreDataService.read(entityType: RecipeEntity.self, context: self.coreDataService.mainContext, predicate: predicate, sortDescriptors: nil)
+        let response = await self.coreDataService.read(entityType: RecipeEntity.self, context: self.coreDataService.mainContext, predicate: predicate, sortDescriptors: [sortDescriptor])
         return response
     }
     
-    // DELETE
+    func fetchAllRecipe() async -> [RecipeEntity] {
+        let sortDescriptor = NSSortDescriptor(key: "label", ascending: true)
+        let response = await self.coreDataService.read(entityType: RecipeEntity.self, context: self.coreDataService.mainContext, predicate: nil, sortDescriptors: [sortDescriptor])
+        return response
+    }
+    
     func delete(recipe: [RecipeEntity]) {
         Task {
             await self.coreDataService.delete(objects: recipe, context: self.coreDataService.mainContext)
@@ -40,7 +51,7 @@ class RecipeDataStore {
     
     private func configureRecipeEntity(for newRecipe: RecipeEntity, recipe: RecipeDescription) {
         newRecipe.label = recipe.label
-        newRecipe.ingredients = recipe.ingredientLines.joined(separator: "newLine")
+        newRecipe.ingredients = recipe.ingredientLines.joined(separator: "\n")
         newRecipe.duration = recipe.durationFormatted
         newRecipe.image = recipe.image
         newRecipe.url = recipe.url

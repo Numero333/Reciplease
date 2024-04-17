@@ -16,7 +16,6 @@ final class RecipeTableViewCell: UITableViewCell {
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var informationBlock: UIView!
-    
     static let identifier = "RecipeCell"
     
     // MARK: - Accessible
@@ -27,22 +26,28 @@ final class RecipeTableViewCell: UITableViewCell {
     //MARK: - Override
     override func awakeFromNib() {
         super.awakeFromNib()
-        selectionStyle = .none
-        title.customShadow()
-        subTitle.customShadow()
-        informationBlock.customBorder()
+        configureUI()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
+    //MARK: - Accessible
     func configureCell(with recipe: RecipeDescription) {
         self.title.text = recipe.label.description
         self.subTitle.text = recipe.ingredientLines.joined(separator: " ")
         self.backgroundImage.loadImage(for: recipe.image)
         self.likeLabel.text = recipe.yield.description
         self.durationLabel.text = recipe.durationFormatted
+    }
+    
+    //MARK: - Private
+    private func configureUI() {
+        selectionStyle = .none
+        title.customShadow()
+        subTitle.customShadow()
+        informationBlock.customBorder()
     }
 }
 

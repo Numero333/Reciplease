@@ -8,14 +8,6 @@
 import UIKit
 
 final class FavoriteDetailViewController: UIViewController, FavoriteDetailDelegate {
-    func didUpdate(liked: Bool) {
-        let imageSystem = liked ? "star.fill" : "star"
-        DispatchQueue.main.async {
-            self.likeButton.image = UIImage(systemName: imageSystem)
-        }
-        self.navigationController?.popViewController(animated: true)
-    }
-    
     
     //MARK: - Property
     @IBOutlet weak var ingredientTableView: UITableView!
@@ -34,10 +26,7 @@ final class FavoriteDetailViewController: UIViewController, FavoriteDetailDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
-        configureTableView()
-        configureAccessibility()
-        informationBlock.customBorder()
+        configureUI()
         model.delegate = self
     }
     
@@ -46,23 +35,36 @@ final class FavoriteDetailViewController: UIViewController, FavoriteDetailDelega
         if let url = model.recipe.url {
             destinationVC.model = WebViewModel(url: url)
         }
-       
     }
     
-    
-    @IBAction func toggleFavoriteButton(_ sender: Any) {
-       presentAlert()
+    //MARK: - FavoriteDetailDelegate
+    func didUpdate(liked: Bool) {
+        let imageSystem = liked ? "star.fill" : "star"
+        DispatchQueue.main.async {
+            self.likeButton.image = UIImage(systemName: imageSystem)
+        }
+        self.navigationController?.popViewController(animated: true)
     }
+    
+    //MARK: - Action
+    @IBAction func favoriteButtonTapped(_ sender: Any) {
+        presentAlert()
+    }
+    
     //MARK: - Private
     private func configureTableView() {
         ingredientTableView.delegate = self
         ingredientTableView.dataSource = self
     }
     
-    private func configureView() {
+    private func configureUI() {
         likeLabel.text = model.recipe.yield.description
         durationLabel.text = model.recipe.duration?.description
         imageView.loadImage(for: model.recipe.image)
+        
+        configureTableView()
+        configureAccessibility()
+        informationBlock.customBorder()
     }
     
     private func configureAccessibility() {
@@ -72,23 +74,17 @@ final class FavoriteDetailViewController: UIViewController, FavoriteDetailDelega
     }
     
     private func presentAlert() {
-        let alertController = UIAlertController(title: "Delete Recipe", message: "Do you want to delete this recipe ?", preferredStyle: .alert)
-
-        let actionOK = UIAlertAction(title: "Yes", style: .default, handler: { action in
-            self.model.delete()
-        })
-
-        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            alertController.dismiss(animated: true)
-        })
-
+        let alertController = UIAlertController(
+            title: "Delete Recipe",
+            message: "Do you want to delete this recipe ?",
+            preferredStyle: .alert
+        )
+        let actionOK = UIAlertAction(title: "Yes", style: .default) { action in self.model.delete() }
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel) { action in alertController.dismiss(animated: true) }
         alertController.addAction(actionCancel)
         alertController.addAction(actionOK)
-        
-
         present(alertController, animated: true, completion: nil)
     }
-
 }
 
 extension FavoriteDetailViewController: UITableViewDataSource, UITableViewDelegate {

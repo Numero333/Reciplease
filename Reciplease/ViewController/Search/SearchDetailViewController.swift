@@ -25,16 +25,9 @@ final class SearchDetailViewController: UIViewController, SearchDetailDelegate {
     //MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
-        configureView()
-        ingredientTableView.reloadData()
         model.delegate = self
         model.loadData()
-        
-        likeLabel.accessibilityValue = "likes"
-        durationLabel.accessibilityValue = "preparation time"
-        favoriteButton.accessibilityLabel = "add to favorite button"
-        informationBlock.customBorder()
+        configureUI()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -42,7 +35,7 @@ final class SearchDetailViewController: UIViewController, SearchDetailDelegate {
         destinationVC.model = WebViewModel(url: model.selectedRecipe.url)
     }
     
-    //MARK: - AppServiceDelegate
+    //MARK: - SearchDetailDelegate
     func didUpdate(liked: Bool) {
         let imageSystem = liked ? "star.fill" : "star"
         DispatchQueue.main.async {
@@ -51,7 +44,7 @@ final class SearchDetailViewController: UIViewController, SearchDetailDelegate {
     }
     
     //MARK: - Action
-    @IBAction func toggleFavoriteButton(_ sender: Any) {
+    @IBAction func favoriteButtonTapped(_ sender: Any) {
         model.handleFavoriteButton()
     }
     
@@ -61,10 +54,21 @@ final class SearchDetailViewController: UIViewController, SearchDetailDelegate {
         ingredientTableView.dataSource = self
     }
     
-    private func configureView() {
+    private func configureUI() {
         likeLabel.text = model.selectedRecipe.yield.description
         durationLabel.text = model.selectedRecipe.durationFormatted
         imageView.loadImage(for: model.selectedRecipe.image)
+        informationBlock.customBorder()
+        
+        configureTableView()
+        ingredientTableView.reloadData()
+        configureAccessibility()
+    }
+    
+    private func configureAccessibility() {
+        likeLabel.accessibilityValue = "likes"
+        durationLabel.accessibilityValue = "preparation time"
+        favoriteButton.accessibilityLabel = "add to favorite button"
     }
 }
 

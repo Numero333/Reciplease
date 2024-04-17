@@ -1,5 +1,5 @@
 //
-//  NetworkConfiguration.swift
+//  APIConfiguration.swift
 //  Reciplease
 //
 //  Created by François-Xavier on 14/03/2024.

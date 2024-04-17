@@ -30,6 +30,7 @@
                         </navigationBarAppearance>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Igf-oV-TV1">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -73,7 +74,7 @@
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="addIngredientButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="b6j-UE-Exs"/>
+                                            <action selector="addIngredientButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="b6j-UE-Exs"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -156,7 +157,7 @@
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="SearchButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Bpq-LR-NpI"/>
+                                            <action selector="searchButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Bpq-LR-NpI"/>
                                         </connections>
                                     </button>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="MbD-fx-0lE">
@@ -429,7 +430,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="DgR-Am-idY"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="star" catalog="system" id="rlW-BU-F6p">
                             <connections>
-                                <action selector="toggleFavoriteButton:" destination="vgF-et-XhM" id="Pea-BV-GvH"/>
+                                <action selector="favoriteButtonTapped:" destination="vgF-et-XhM" id="Pea-BV-GvH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

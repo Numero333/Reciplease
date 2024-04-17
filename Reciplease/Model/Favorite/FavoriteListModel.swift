@@ -29,10 +29,7 @@ final class FavoriteListModel {
     
     //MARK: - Private
     private func fetchDatabase() async -> [RecipeEntity] {
-        let data = await recipeDataStore.fetchRecipe(
-            selection: nil,
-            sortDescription: nil
-        )
+        let data = await recipeDataStore.fetchAllRecipe()
         return data
     }
 }
