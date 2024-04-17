@@ -11,7 +11,6 @@ import Alamofire
 
 final class NetworkServiceTest: XCTestCase {
     
-    
     private var session: Session! = {
         let configuration = URLSessionConfiguration.af.default
         configuration.protocolClasses = [SessionFakeProtocol.self]
@@ -27,9 +26,6 @@ final class NetworkServiceTest: XCTestCase {
     private var url: URL! =  URL(string: "ok")
     
     var recipes: EdamamSearch?
-    
-    
-    
     
     func testAPIRequestWithCorrectResponse() async {
         

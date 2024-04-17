@@ -10,27 +10,35 @@ import XCTest
 
 final class FavoriteListModelTest: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var coreDataService: CoreDataService!
+    var recipeDataStore: RecipeDataStore!
+    
+    var model = FavoriteListModel()
+    
+    private var data: Data! = {
+        let bundle = Bundle(for: SearchDetailModelTest.self)
+        let url = bundle.url(forResource: "MockRecipes", withExtension: "json")
+        return try! Data(contentsOf: url!)
+    }()
+    
+    var recipes: EdamamSearch?
+    
+    override func setUp() {
+        super.setUp()
+        coreDataService = CoreDataService()
+        recipeDataStore = RecipeDataStore()
+        recipes = try? JSONDecoder().decode(EdamamSearch.self, from: data)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testLoadData(){
+        //Given
+        recipeDataStore.save(selection: recipes!.results[0].recipe)
+        
+        //When
+        model.loadData()
+        
+        //Then
+        XCTAssertNotNil(model.recipes)
     }
 
 }
