@@ -10,35 +10,23 @@ import XCTest
 
 final class FavoriteListModelTest: XCTestCase {
 
-    var coreDataService: CoreDataService!
-    var recipeDataStore: RecipeDataStore!
-    
-    var model = FavoriteListModel()
-    
-    private var data: Data! = {
-        let bundle = Bundle(for: SearchDetailModelTest.self)
-        let url = bundle.url(forResource: "MockRecipes", withExtension: "json")
-        return try! Data(contentsOf: url!)
-    }()
-    
-    var recipes: EdamamSearch?
-    
-    override func setUp() {
-        super.setUp()
-        coreDataService = CoreDataService()
-        recipeDataStore = RecipeDataStore()
-        recipes = try? JSONDecoder().decode(EdamamSearch.self, from: data)
-    }
-    
+    let recipeDataStore = RecipeDataStore()
+    let model = FavoriteListModel()
+    let recipe = RecipeDescription(label: "Test", image: "Test", url: "Test", yield: 1, ingredientLines: ["Test"], totalTime: 1)
+        
     func testLoadData(){
         //Given
-        recipeDataStore.save(selection: recipes!.results[0].recipe)
+        let expectation = self.expectation(description: "Save complete")
+        recipeDataStore.save(selection: recipe)
         
         //When
         model.loadData()
         
         //Then
-        XCTAssertNotNil(model.recipes)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            XCTAssertNotNil(self.model.recipes)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 2, handler: nil)
     }
-
 }

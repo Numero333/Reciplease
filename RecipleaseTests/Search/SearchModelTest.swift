@@ -12,20 +12,12 @@ import Alamofire
 final class SearchModelTest: XCTestCase {
     
     private let model = SearchModel()
-    
     private var session: Session! = {
         let configuration = URLSessionConfiguration.af.default
         configuration.protocolClasses = [SessionFakeProtocol.self]
         return Alamofire.Session(configuration: configuration)
     }()
-    
-    private var data: Data! = {
-        let bundle = Bundle(for: NetworkServiceTest.self)
-        let url = bundle.url(forResource: "MockRecipes", withExtension: "json")
-        return try! Data(contentsOf: url!)
-    }()
-    
-    private var url: URL! =  URL(string: "test.com")
+        
     
     func testAddIngredient() {
         //Given
@@ -57,15 +49,19 @@ final class SearchModelTest: XCTestCase {
     
     func testLoadData() {
         //Given
+        let expectation = self.expectation(description: "Load Data complete")
         model.network = NetworkService(session: session)
         model.addIngredient(text: "tomatoes")
+        
         //When
         model.loadData()
        
         //Then
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             XCTAssert(self.model.recipes != nil)
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 2, handler: nil)
     }
 }
 
