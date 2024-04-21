@@ -15,10 +15,10 @@ protocol SearchDetailDelegate: AnyObject {
 final class SearchDetailModel {
     
     //MARK: - Property
-    let recipeDataStore = RecipeDataStore()
+    private let recipeDataStore = RecipeDataStore()
+    let selectedRecipe: RecipeDescription
     var likeState = false
     var recipe = [RecipeEntity]()
-    let selectedRecipe: RecipeDescription
     weak var delegate: SearchDetailDelegate?
         
     //MARK: - Initialization
@@ -50,7 +50,7 @@ final class SearchDetailModel {
     }
     
     private func setLikeState() {
-        if !recipe.isEmpty {
+        if recipe.count > 0 {
             delegate?.didUpdate(liked: true)
             likeState = true
         } else {
