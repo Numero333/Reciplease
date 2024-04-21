@@ -23,7 +23,7 @@ final class NetworkServiceTest: XCTestCase {
         return try! Data(contentsOf: url!)
     }()
     
-    private var url: URL! =  URL(string: "ok")
+    private var url: URL! =  URL(string: "test.com")
     
     var recipes: EdamamSearch?
     
@@ -40,8 +40,6 @@ final class NetworkServiceTest: XCTestCase {
         
         // Then
         XCTAssert((recipes?.results.count)! > 0)
-        
-
     }
     
 }

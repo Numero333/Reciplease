@@ -9,41 +9,25 @@ import XCTest
 import Alamofire
 @testable import Reciplease
 
-final class SearchListModelTest: XCTestCase {
+final class SearchListModelTests: XCTestCase {
     
-    private var session: Session! = {
-        let configuration = URLSessionConfiguration.af.default
-        configuration.protocolClasses = [SessionFakeProtocol.self]
-        return Alamofire.Session(configuration: configuration)
-    }()
-    
-    private var data: Data! = {
-        let bundle = Bundle(for: NetworkServiceTest.self)
-        let url = bundle.url(forResource: "MockRecipes", withExtension: "json")
-        return try! Data(contentsOf: url!)
-    }()
-    
-    private var url: URL! =  URL(string: "ok")
-    
-    var recipes: EdamamSearch?
-    
-    func testInitWithRecipes() async {
+    private var mockRecipes: EdamamSearch!
+
+    override func setUp() {
+        super.setUp()
+        let recipeDescription = RecipeDescription(label: "Test", image: "Test", url: "test.com", yield: 1, ingredientLines: ["Test"], totalTime: 1)
+        let recipe = Recipe(recipe: recipeDescription)
+        mockRecipes = EdamamSearch(results: [recipe])
+    }
+
+    func testInitWithRecipes() {
         
-        //Given
-        let ingredients = "tomatoes"
-        let recipes: EdamamSearch?
+        // When
+        let model = SearchListModel(recipes: mockRecipes)
         
-        //When
-        recipes = try? await NetworkService(session: session).performRequest(apiRequest: APIConfiguration(url: .edamamRecipe, parameters: RecipeQueryParameters(query: ingredients), method: .get))
-        
-        guard let recipesUnwrapped = recipes else {
-            XCTFail("Expected non-nil value, but got nil")
-            return
-        }
-        
-        //Then
-        let model = SearchListModel(recipes: recipesUnwrapped)
-        XCTAssertGreaterThanOrEqual(model.recipes!.results.count, 1)
+        // Then
+        XCTAssertNotNil(model.recipes)
+        XCTAssertEqual(model.recipes?.results.count, 1)
     }
     
 }

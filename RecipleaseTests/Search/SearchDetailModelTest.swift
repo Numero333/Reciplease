@@ -11,128 +11,73 @@ import Foundation
 
 final class SearchDetailModelTest: XCTestCase {
     
-    var coreDataService: CoreDataService!
-    var recipeDataStore: RecipeDataStore!
-    
-    var model: SearchDetailModel!
-    
-    private var data: Data! = {
-        let bundle = Bundle(for: SearchDetailModelTest.self)
-        let url = bundle.url(forResource: "MockRecipes", withExtension: "json")
-        return try! Data(contentsOf: url!)
-    }()
-    
-    var recipes: EdamamSearch?
+    private var recipes: EdamamSearch?
+    private var model: SearchDetailModel!
     
     override func setUp() {
         super.setUp()
-        coreDataService = CoreDataService(.inMemory)
-        recipeDataStore = RecipeDataStore(mainContext: coreDataService.mainContext)
-        recipes = try? JSONDecoder().decode(EdamamSearch.self, from: data)
-        model = SearchDetailModel(selectedRecipe: recipes!.results[0].recipe)
+        let recipeDescription = RecipeDescription(label: "Test", image: "Image", url: "url", yield: 1, ingredientLines: ["Test"], totalTime: 1)
+        model = SearchDetailModel(selectedRecipe: recipeDescription)
     }
     
-    
-    // EXEMPLE FOR RECIPEDATASTORE
-    
-    func testLoadData() {
+    func testLoadDataWithNoRecipeStored() {
         //When
         model.loadData()
+        sleep(UInt32(0.1))
         
         //Then
-        XCTAssertNotNil(model.recipe)
+        XCTAssertFalse(self.model.likeState)
+        XCTAssertLessThanOrEqual(self.model.recipe.count, 0)
+        
     }
     
     func testSave() {
-        //When
-        model.save()
+        //Given
+        let expectation = self.expectation(description: "Save complete")
         
-        //Then
-        XCTAssertNotNil(model.recipe)
+        // When
+        model.handleFavoriteButton()
+        
+        // Then
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            XCTAssertTrue(self.model.likeState)
+            XCTAssertGreaterThanOrEqual(self.model.recipe.count, 1)
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 2, handler: nil)
     }
     
     func testDelete() {
-        //When
-        model.loadData()
-        model.delete()
-        
-        //Then
-        XCTAssert(model.recipe.isEmpty)
-    }
-    
-    func testHandleLikeShouldBeTrue(){
-        //When
+        let saveExpectation = self.expectation(description: "Save complete")
+        // Step 1: Add a recipe
         model.handleFavoriteButton()
-         
-        //Then
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             XCTAssertTrue(self.model.likeState)
+            XCTAssertGreaterThanOrEqual(self.model.recipe.count, 1)
+            saveExpectation.fulfill()
         }
-    }
-    
-    func testHandleLikeShouldBeFalse() {
-        //When
-        model.loadData()
+        waitForExpectations(timeout: 2, handler: nil)
+        
+        // Step 2: Delete the recipe
+        let deleteExpectation = self.expectation(description: "Delete complete")
         model.handleFavoriteButton()
-        
-        //Then
-        XCTAssertFalse(model.likeState)
-    }
-    
-    func testDurationFormatted() {
-        //When
-        XCTAssertEqual(model.selectedRecipe.durationFormatted, "0:10")
-        
-       let fakeRecipe = EdamamSearch(results: [Recipe(recipe: RecipeDescription(label: "test", image: "test", url: "test", yield: 0, ingredientLines: ["coco"], totalTime: nil))])
-        
-        XCTAssertEqual(fakeRecipe.results[0].recipe.durationFormatted, "N/A")
-    }
-    
-    func testchichi() async {
-        
-        guard let recipesSelected = recipes?.results[0].recipe else {
-            XCTFail("Expected not nil")
-            return
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            XCTAssertFalse(self.model.likeState)
+            XCTAssertLessThanOrEqual(self.model.recipe.count, 0)
+            deleteExpectation.fulfill()
         }
-        
-        recipeDataStore.save(selection: recipesSelected)
-        
-        let fetchedResult = try? await recipeDataStore.fetchRecipe(selection: recipesSelected.label, sortDescription: nil)
-        
-        XCTAssertNotNil(fetchedResult)
-    }
-    
-    func testChocho() async {
-        
-        guard let recipesSelected = recipes?.results[0].recipe else {
-            XCTFail("Expected not nil")
-            return
-        }
-        
-        recipeDataStore.save(selection: recipesSelected)
-        let fetchedResult = try! await recipeDataStore.fetchRecipe(
-            selection: recipesSelected.label,
-            sortDescription: [NSSortDescriptor(
-                key: "label",
-                ascending: true
-            )]
-        )
-        
-        recipeDataStore.delete(recipe: fetchedResult)
-        
-    }
-    
-    func testfailt() async {
-        
-//        recipes = nil
-//
-//        recipeDataStore.save(selection: recipes!.results[0].recipe)
-        
-        let fetchedResult: [RecipeEntity]? = try! await recipeDataStore.fetchRecipe(selection: "Test Error", sortDescription: nil)
-        
-        
-        XCTAssert(fetchedResult!.count < 1)
-        
+        waitForExpectations(timeout: 2, handler: nil)
     }
 
+    func testDurationFormatted() {
+        //Then
+        XCTAssertEqual(model.selectedRecipe.durationFormatted, "0:1")
+        
+        //Given
+        let fakeRecipe = EdamamSearch(results: [Recipe(recipe: RecipeDescription(label: "test", image: "test", url: "test", yield: 0, ingredientLines: ["coco"], totalTime: nil))])
+        
+        //Then
+        XCTAssertEqual(fakeRecipe.results[0].recipe.durationFormatted, "N/A")
+    }
 }
