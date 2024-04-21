@@ -13,18 +13,12 @@ final class RecipeDataStore {
     //MARK: - Properties
     private let coreDataService = CoreDataService.shared
     
-    let mainContext: NSManagedObjectContext
-    
-    init(mainContext: NSManagedObjectContext = CoreDataService.shared.mainContext) {
-        self.mainContext = mainContext
-    }
-    
     //MARK: - Accessible
     func save(selection: RecipeDescription) {
         let newRecipe = RecipeEntity(context: self.coreDataService.mainContext)
         configureRecipeEntity(for: newRecipe, recipe: selection)
         Task {
-            try await self.coreDataService.save(context: self.coreDataService.mainContext)
+             await self.coreDataService.save(context: self.coreDataService.mainContext)
         }
     }
     
@@ -45,7 +39,7 @@ final class RecipeDataStore {
     func delete(recipe: [RecipeEntity]) {
         Task {
             await self.coreDataService.delete(objects: recipe, context: self.coreDataService.mainContext)
-            try await self.coreDataService.save(context: self.coreDataService.mainContext)
+            await self.coreDataService.save(context: self.coreDataService.mainContext)
         }
     }
     
