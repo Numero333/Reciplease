@@ -14,7 +14,7 @@ protocol FavoriteListDelegate: AnyObject {
 final class FavoriteListModel {
     
     //MARK: - Property
-    let recipeDataStore = RecipeDataStore()
+    private let recipeDataStore = RecipeDataStore()
     var recipes: [RecipeEntity]?
     var selectedRecipe: RecipeEntity?
     weak var delegate: FavoriteListDelegate?
