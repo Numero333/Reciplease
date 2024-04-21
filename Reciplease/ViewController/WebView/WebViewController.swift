@@ -18,7 +18,6 @@ final class WebViewController: UIViewController {
     override func loadView() {
         webView = WKWebView()
         view = webView
-        print(model.url)
     }
     
     override func viewDidLoad() {
