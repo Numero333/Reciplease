@@ -21,8 +21,7 @@ final class SearchViewController: UIViewController, SearchRecipeDelegate {
         super.viewDidLoad()
         model.delegate = self
         configureTableView()
-        activityIndicator.isHidden = true
-        ingredientTextfield.accessibilityLabel = "search for ingredients example"
+        configureUI()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -65,6 +64,11 @@ final class SearchViewController: UIViewController, SearchRecipeDelegate {
     }
     
     //MARK: - Private
+    private func configureUI() {
+        activityIndicator.isHidden = true
+        ingredientTextfield.accessibilityLabel = "search for ingredients example"
+    }
+    
     private func configureTableView() {
         ingredientTableView.dataSource = self
         ingredientTableView.delegate = self
