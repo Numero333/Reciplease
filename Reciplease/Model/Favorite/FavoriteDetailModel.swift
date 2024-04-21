@@ -14,8 +14,8 @@ protocol FavoriteDetailDelegate: AnyObject {
 final class FavoriteDetailModel {
     
     //MARK: - Property
+    private let recipeDataStore = RecipeDataStore()
     let recipe: RecipeEntity
-    let recipeDataStore = RecipeDataStore()
     var ingredients: [String] {
         recipe.ingredients?.components(separatedBy: "\n").filter { !$0.isEmpty } ?? []
     }
