@@ -7,29 +7,28 @@
 
 import CoreData
 
-//MARK: - Protocol
-protocol CoreDataServiceInterface: AnyObject {
-    var mainContext: NSManagedObjectContext { get }
-    func save(context: NSManagedObjectContext) async throws
-    func read<T: NSManagedObject>(entityType: T.Type, context: NSManagedObjectContext, predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor]?) async -> [T]
-    func delete(objects: [NSManagedObject], context: NSManagedObjectContext) async
-}
-
 enum StorageType{
     case persistent, inMemory
 }
 
-final class CoreDataService: CoreDataServiceInterface {
+class CoreDataService {
     
     //MARK: - Singleton
-    static let shared: CoreDataServiceInterface = CoreDataService()
+    static let shared: CoreDataService = CoreDataService()
+    
+    private var storageType: StorageType = .persistent
     
     // MARK: - Property
-    let mainContext: NSManagedObjectContext
-    let persistentContainer: NSPersistentContainer
+    var mainContext: NSManagedObjectContext
+    var persistentContainer: NSPersistentContainer
     
     // MARK: - Initialization
-    init(_ storageType: StorageType = .persistent) {
+    private init() {
+        
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
+            storageType = .inMemory
+        }
+        
         guard let url = Bundle.main.url(forResource: "RecipeCoreDataModel", withExtension: "momd") else {
             fatalError("Error getting url of data model file")
         }
@@ -40,13 +39,13 @@ final class CoreDataService: CoreDataServiceInterface {
         persistentContainer = NSPersistentContainer(name: "RecipeCoreDataModel", managedObjectModel: model)
         
         if storageType == .inMemory {
-              let description = NSPersistentStoreDescription()
-              description.url = URL(fileURLWithPath: "/dev/null")
-              self.persistentContainer.persistentStoreDescriptions = [description]
-            }
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            self.persistentContainer.persistentStoreDescriptions = [description]
+        }
         
         persistentContainer.loadPersistentStores { (_, error) in
-            if let error {
+            if let error = error {
                 fatalError("Something went wrong while loading persistent store \(error)")
             }
         }
@@ -56,18 +55,18 @@ final class CoreDataService: CoreDataServiceInterface {
     
     // MARK: - Accessible
     func read<T: NSManagedObject>(entityType: T.Type, context: NSManagedObjectContext, predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor]?) async -> [T] {
-    return await context.perform {
-        let request: NSFetchRequest<T> = NSFetchRequest(entityName: String(describing: entityType))
-        request.predicate = predicate
-        request.sortDescriptors = sortDescriptors
-        do {
-            return try context.fetch(request)
-        } catch {
-            print("An error occurred during the reading operation: \(error)")
-            return []
+        return await context.perform {
+            let request: NSFetchRequest<T> = NSFetchRequest(entityName: String(describing: entityType))
+            request.predicate = predicate
+            request.sortDescriptors = sortDescriptors
+            do {
+                return try context.fetch(request)
+            } catch {
+                print("An error occurred during the reading operation: \(error)")
+                return []
+            }
         }
     }
-}
     func save(context: NSManagedObjectContext) async {
         await context.perform {
             do {
