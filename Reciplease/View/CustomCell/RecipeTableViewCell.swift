@@ -62,7 +62,7 @@ extension UILabel {
 extension UIView {
     func customBorder() {
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor(.white).cgColor
+        self.layer.borderColor = UIColor.white.cgColor
         self.layer.cornerRadius = 5
     }
 }
