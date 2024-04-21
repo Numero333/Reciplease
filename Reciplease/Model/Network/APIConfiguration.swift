@@ -16,6 +16,8 @@ struct APIConfiguration {
     
     enum URLBuilder {
         case edamamRecipe
+        
+        // Return the fully constructed URL.
         var value: URL {
             switch self {
             case .edamamRecipe:
