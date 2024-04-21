@@ -72,14 +72,14 @@ extension UIImageView {
                         self.image = UIImage(data: data)
                     }
                 } else {
-                    // If loading image fail
+                    // Handle image loading failure
                     DispatchQueue.main.async {
                         self.image = UIImage(systemName: "fork.knife")
                     }
                 }
             }
         } else {
-            // If the recipe does not have an image
+            // Use default image when no image is available
             DispatchQueue.main.async {
                 self.image = UIImage(systemName: "fork.knife")
             }
