@@ -12,9 +12,9 @@ final class FavoriteListViewController: UIViewController, FavoriteListDelegate {
     //MARK: - Property
     let model = FavoriteListModel()
     @IBOutlet weak var recipeTableView: UITableView!
-    private let coreDataService = CoreDataService.shared
-    
     @IBOutlet weak var messageEmptyRecipe: UILabel!
+    
+    //MARK: - Override
     override func viewDidLoad() {
         model.delegate = self
         recipeTableView.delegate = self
