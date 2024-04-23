@@ -8,6 +8,7 @@
 import XCTest
 import Foundation
 @testable import Reciplease
+import CoreData
 
 final class SearchDetailModelTest: XCTestCase {
     
@@ -17,7 +18,8 @@ final class SearchDetailModelTest: XCTestCase {
     override func setUp() {
         super.setUp()
         let recipeDescription = RecipeDescription(label: "Test", image: "Image", url: "url", yield: 1, ingredientLines: ["Test"], totalTime: 1)
-        model = SearchDetailModel(selectedRecipe: recipeDescription)
+        let recipeDataStore = RecipeDataStore(coreDataService: MockCoreDataService())
+        model = SearchDetailModel(selectedRecipe: recipeDescription, recipeDataStore: recipeDataStore)
     }
     
     func testLoadDataWithNoRecipeStored() {
@@ -32,19 +34,19 @@ final class SearchDetailModelTest: XCTestCase {
     }
     
     func testSave() {
-        //Given
+        // Given
         let expectation = self.expectation(description: "Save complete")
-        
+
         // When
         model.handleFavoriteButton()
-        
+
         // Then
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             XCTAssertTrue(self.model.likeState)
             XCTAssertGreaterThanOrEqual(self.model.recipe.count, 1)
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 2, handler: nil)
     }
     
@@ -57,7 +59,7 @@ final class SearchDetailModelTest: XCTestCase {
             XCTAssertGreaterThanOrEqual(self.model.recipe.count, 1)
             saveExpectation.fulfill()
         }
-        waitForExpectations(timeout: 2, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
         
         // Step 2: Delete the recipe
         let deleteExpectation = self.expectation(description: "Delete complete")
@@ -67,9 +69,9 @@ final class SearchDetailModelTest: XCTestCase {
             XCTAssertLessThanOrEqual(self.model.recipe.count, 0)
             deleteExpectation.fulfill()
         }
-        waitForExpectations(timeout: 2, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
     }
-
+    
     func testDurationFormatted() {
         //Then
         XCTAssertEqual(model.selectedRecipe.durationFormatted, "0:1")

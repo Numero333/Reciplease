@@ -21,7 +21,6 @@ final class SearchListModelTests: XCTestCase {
     }
 
     func testInitWithRecipes() {
-        
         // When
         let model = SearchListModel(recipes: mockRecipes)
         

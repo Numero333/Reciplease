@@ -30,7 +30,7 @@ final class FavoriteListViewController: UIViewController, FavoriteListDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationVC = segue.destination as? FavoriteDetailViewController else { return }
         if let selection = model.selectedRecipe {
-            destinationVC.model = FavoriteDetailModel(recipe: selection)
+            destinationVC.model = FavoriteDetailModel(recipe: selection, recipeDataStore: model.recipeDataStore)
         }
     }
     

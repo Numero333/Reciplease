@@ -15,21 +15,25 @@ protocol SearchDetailDelegate: AnyObject {
 final class SearchDetailModel {
     
     //MARK: - Property
-    private let recipeDataStore = RecipeDataStore()
+    private let recipeDataStore: RecipeDataStore
     let selectedRecipe: RecipeDescription
     var likeState = false
     var recipe = [RecipeEntity]()
     weak var delegate: SearchDetailDelegate?
         
     //MARK: - Initialization
-    init(selectedRecipe: RecipeDescription) {
+    init(selectedRecipe: RecipeDescription, recipeDataStore: RecipeDataStore = RecipeDataStore()) {
         self.selectedRecipe = selectedRecipe
+        self.recipeDataStore = recipeDataStore
     }
     
     //MARK: - Accessible
     func loadData() {
         Task {
-            recipe = await recipeDataStore.fetchRecipe(selection: selectedRecipe.label, sortDescription: nil)
+            let fetchedRecipes = await recipeDataStore.fetchRecipe(selection: selectedRecipe.label, sortDescription: nil)
+            if let fetchedRecipes = fetchedRecipes {
+                recipe.append(contentsOf: fetchedRecipes)
+            }
             setLikeState()
         }
     }
@@ -46,6 +50,7 @@ final class SearchDetailModel {
     
     private func delete() {
         recipeDataStore.delete(recipe: recipe)
+        recipe = []
         loadData()
     }
     

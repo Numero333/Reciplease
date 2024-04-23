@@ -14,10 +14,15 @@ protocol FavoriteListDelegate: AnyObject {
 final class FavoriteListModel {
     
     //MARK: - Property
-    private let recipeDataStore = RecipeDataStore()
+    let recipeDataStore: RecipeDataStore
     var recipes: [RecipeEntity]?
     var selectedRecipe: RecipeEntity?
     weak var delegate: FavoriteListDelegate?
+    
+    //MARK: - Initialization
+    init(recipeDataStore: RecipeDataStore = RecipeDataStore()) {
+        self.recipeDataStore = recipeDataStore
+    }
     
     //MARK: - Accesible
     func loadData() {
@@ -29,7 +34,11 @@ final class FavoriteListModel {
     
     //MARK: - Private
     private func fetchDatabase() async -> [RecipeEntity] {
-        let data = await recipeDataStore.fetchAllRecipe()
-        return data
+        var fetchedRecipes = [RecipeEntity]()
+        let fetchedData = await recipeDataStore.fetchAllRecipe()
+        if let fetchedData = fetchedData {
+            fetchedRecipes.append(contentsOf: fetchedData)
+        }
+        return fetchedRecipes
     }
 }
